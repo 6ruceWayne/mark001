@@ -2,17 +2,19 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="/Testowiki/resources/css/bootstrap.min.css" rel="stylesheet">
-<link href="/Testowiki/resources/css/common.css" rel="stylesheet">
-<script src="/Testowiki/resources/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="${contextPath}/resources/css/bootstrap.min.css">
+<script src="${contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="../index.jsp"><spring:message code="back" /></a>
+	<a href="${contextPath}/"><spring:message code="back" /></a>
 	<br>
 	<span style="float: right"><a href="?lang=ru">ru</a> | <a
 		href="?lang=ua">ua</a> | <a href="?lang=en">en</a> </span>
@@ -29,7 +31,7 @@
 					<th width="80"><spring:message code="test.name" /></th>
 					<th width="80"><spring:message code="test.author" /></th>
 					<th width="120"><spring:message code="test.description" /></th>
-					<th width="60"><spring:message code="test.isFree" /></th>
+					<th width="60"><spring:message code="test.free" /></th>
 					<th width="120"><spring:message code="test.comment.to.admin" /></th>
 					<th width="120"><spring:message code="test.section" /></th>
 					<th width="120"><spring:message code="test.status" /></th>
@@ -43,7 +45,7 @@
 					<td>${test.name}</td>
 					<td>${test.author}</td>
 					<td>${test.description}</td>
-					<td>${test.isFree}</td>
+					<td>${test.free}</td>
 					<td>${test.commentToAdmin}</td>
 					<td>${test.section}</td>
 					<td>${test.status}</td>

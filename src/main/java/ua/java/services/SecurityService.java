@@ -6,4 +6,6 @@ public interface SecurityService {
 	void autologin(String username, String password);
 
 	String getName();
+	
+	void logout();
 }

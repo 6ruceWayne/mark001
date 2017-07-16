@@ -16,6 +16,21 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<form:form modelAttribute="test" method="GET" action="tests/saveTest">
+		<table>
+			<tr>
+				<td><spring:message code="test.name" /></td>
+				<td><form:input path="name" /></td>
+			</tr>
+			<tr>
+				<td><spring:message code="test.free" /></td>
+				<td><form:input path="free" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit"
+					value="<spring:message text="test.save"/>" />
+			</tr>
+		</table>
+	</form:form>
 </body>
 </html>

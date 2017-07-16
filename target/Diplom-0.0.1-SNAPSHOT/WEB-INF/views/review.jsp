@@ -5,6 +5,7 @@
 <%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,7 @@
 	href="${contextPath}/resources/css/bootstrap.min.css">
 <script src="${contextPath}/resources/js/jquery-3.2.1.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -36,18 +37,17 @@
 				<td><spring:message code="test.free" /></td>
 				<td><form:input path="free" /></td>
 			</tr>
-			<c:forEach items="${ourTest.questions}" varStatus="vs">
+			<c:forEach items="${ourTest.questions}" var="vs">
 				<tr>
-					<td><form:label path="questions[${vs.index}].question">
-							<spring:message code="test.question" />:</form:label> <form:input
-							path="questions[${vs.index}].question"></form:input></td>
+					<td><spring:message code="test.question" /> <form:input
+							path="vs.text"></form:input></td>
 				</tr>
 
-				<c:forEach items="${vs.getCurrent().answers}" varStatus="answ">
+				<c:forEach items="${vs.text}" var="answ">
 					<tr>
-						<td><form:label path="${answ.getCurrent()}.answer">
+						<td><form:label path="${answ.answer}">
 								<spring:message code="test.answer" />:</form:label> <form:input
-								path="${answ.getCurrent()}.answer"></form:input></td>
+								path="${answ.answer}"></form:input></td>
 					</tr>
 				</c:forEach>
 			</c:forEach>
@@ -73,13 +73,13 @@
 			</button>
 			<ul class="dropdown-menu" role="menu">
 				<li><a
-					href="<c:url value='/tests/choise/${ourTest.id}/${"Approve"}' />"><spring:message
+					href="<c:url value='/tests/choise/${ourTest.id}/${"app"}' />"><spring:message
 							code="aprove" /></a></li>
 				<li><a
-					href="<c:url value='/tests/choise/${ourTest.id}/${"Return"}' />"><spring:message
+					href="<c:url value='/tests/choise/${ourTest.id}/${"pro"}' />"><spring:message
 							code="return" /></a></li>
 				<li><a
-					href="<c:url value='/tests/choise/${ourTest.id}/${"Refuse"}' />"><spring:message
+					href="<c:url value='/tests/choise/${ourTest.id}/${"dis"}' />"><spring:message
 							code="refuse" /></a></li>
 			</ul>
 		</div>

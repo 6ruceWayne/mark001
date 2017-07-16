@@ -9,13 +9,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet"
-	href="${contextPath}/resources/css/bootstrap.min.css">
+<link href="${contextPath}/resources/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="${contextPath}/resources/css/common.css" rel="stylesheet">
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="../index.jsp"><spring:message code="back" /></a>
+	<a href="${contextPath}/"><spring:message code="back" /></a>
 	<br>
 	<span style="float: right"><a href="?lang=ru">ru</a> | <a
 		href="?lang=ua">ua</a> | <a href="?lang=en">en</a> </span>

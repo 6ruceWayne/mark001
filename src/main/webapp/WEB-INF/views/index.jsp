@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="${contextPath}/resources/css/bootstrap.min.css"
 	rel="stylesheet">
 <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
@@ -16,10 +16,22 @@
 </head>
 <body>
 
-	<h2>
-		Welcome ${pageContext.request.userPrincipal.name} | <a
-			onclick="document.forms['logoutForm'].submit()">Logout</a>
-	</h2>
+	<div class="container">
+
+		<c:if test="${pageContext.request.userPrincipal.name != null}">
+			<form id="logoutForm" method="POST" action="${contextPath}/logout">
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" />
+			</form>
+
+			<h2>
+				Welcome ${pageContext.request.userPrincipal.name} | <a
+					onclick="document.forms['logoutForm'].submit()">Logout</a>
+			</h2>
+
+		</c:if>
+
+	</div>
 	<br>
 	<span style="float: right"> <c:url var="formPerson"
 			value="/personalOffice" /> <a href="${formPerson}"> personal
@@ -49,5 +61,14 @@
 		<c:url var="formLoginUrl" value="/login" />
 		<a href="${formLoginUrl}">Test login</a>
 	</h3>
+
+	<h3 align="center">
+		<c:url var="logout" value="/logout" />
+		<a href="${logout}">Test logout</a>
+	</h3>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

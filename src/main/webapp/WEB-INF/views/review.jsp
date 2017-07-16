@@ -5,6 +5,7 @@
 <%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,9 +39,8 @@
 			</tr>
 			<c:forEach items="${ourTest.questions}" var="vs">
 				<tr>
-					<td><form:label path="ourQuestion">
-							<spring:message code="test.question" />:</form:label> <form:input
-							path="${vs.text}"></form:input></td>
+					<td><spring:message code="test.question" /> <form:input
+							path="vs.text"></form:input></td>
 				</tr>
 
 				<c:forEach items="${vs.text}" var="answ">
@@ -73,13 +73,13 @@
 			</button>
 			<ul class="dropdown-menu" role="menu">
 				<li><a
-					href="<c:url value='/tests/choise/${ourTest.id}/${"Approve"}' />"><spring:message
+					href="<c:url value='/tests/choise/${ourTest.id}/${"app"}' />"><spring:message
 							code="aprove" /></a></li>
 				<li><a
-					href="<c:url value='/tests/choise/${ourTest.id}/${"Return"}' />"><spring:message
+					href="<c:url value='/tests/choise/${ourTest.id}/${"pro"}' />"><spring:message
 							code="return" /></a></li>
 				<li><a
-					href="<c:url value='/tests/choise/${ourTest.id}/${"Refuse"}' />"><spring:message
+					href="<c:url value='/tests/choise/${ourTest.id}/${"dis"}' />"><spring:message
 							code="refuse" /></a></li>
 			</ul>
 		</div>

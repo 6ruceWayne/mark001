@@ -14,7 +14,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="../index.jsp"><spring:message code="back" /></a>
+	<a href="${contextPath}/"><spring:message code="back" /></a>
 	<br>
 	<span style="float: right"><a href="?lang=ru">ru</a> | <a
 		href="?lang=ua">ua</a> | <a href="?lang=en">en</a> </span>
@@ -57,5 +57,8 @@
 			</c:forEach>
 		</table>
 	</c:if>
+	<c:url var="create" value="/tests/create" />
+	<a href="${create}" class="btn btn-success" role="button"><spring:message
+			code="test.new" /></a>
 </body>
 </html>

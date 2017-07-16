@@ -3,6 +3,7 @@ package ua.java.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,7 +49,7 @@ public class UserController {
 
 		securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
 
-		return "redirect:/welcome";
+		return "redirect:/personalOffice";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -59,22 +60,21 @@ public class UserController {
 		if (logout != null)
 			model.addAttribute("message", "You have been logged out successfully.");
 
-		return "personalOffice";
+		return "login";
 	}
 
-	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/welcome" }, method = RequestMethod.GET)
 	public String welcome(Model model) {
 		return "welcome";
 	}
 
 	@RequestMapping(value = { "/personalOffice" }, method = RequestMethod.GET)
-	public String personalOffice(Model model) {
-		String name = securityService.getName();
-		if (name != null) {
-			model.addAttribute("listTests", test.findAllByAuthor(name));
+	public String personalOffice(Model model, String logout) {
+		if (securityService.getName() != null) {
+			model.addAttribute("listTests", test.findAllByAuthor(securityService.getName()));
 			return "personalOffice";
 		} else {
-			return "login";
+			return "redirect:/login";
 		}
 	}
 }

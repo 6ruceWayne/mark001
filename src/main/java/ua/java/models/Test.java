@@ -6,10 +6,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,18 +25,30 @@ public class Test {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
+	private int count;
 	private String description;
 	private boolean free;
-	@Column(name = "statusT")
-	private String status;
 	private String author;
 	private String section;
+	@OneToMany(mappedBy = "rTest", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	private List<Result> results = new ArrayList<Result>();
 	@OneToMany(mappedBy = "qTest", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	private List<Question> questions = new ArrayList<Question>();
 	private String commentToAdmin;
+	@Column(length = 32, columnDefinition = "varchar(32) default 'Developing'")
+	@Enumerated(EnumType.STRING)
+	private TestStatus status = TestStatus.Developing;
 
 	public Test() {
 
+	}
+
+	public List<Result> getResult() {
+		return results;
+	}
+
+	public void setResult(List<Result> result) {
+		this.results = result;
 	}
 
 	public long getId() {
@@ -67,14 +83,6 @@ public class Test {
 		this.free = free;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public String getAuthor() {
 		return author;
 	}
@@ -107,9 +115,26 @@ public class Test {
 		this.commentToAdmin = commentToAdmin;
 	}
 
+	public TestStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(TestStatus status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "Test [id=" + id + ", name=" + name + ", description=" + description + ", isFree=" + free + ", status="
 				+ status + ", autor=" + author + ", section=" + section + ", commentToAdmin=" + commentToAdmin + "]";
 	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 }
