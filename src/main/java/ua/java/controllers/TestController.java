@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ua.java.models.Answer;
+import ua.java.models.Question;
 import ua.java.models.Test;
 import ua.java.models.TestStatus;
 import ua.java.services.TestInterfaceService;
@@ -74,23 +76,5 @@ public class TestController {
 		return editTest(id, model);
 	}
 
-	@RequestMapping("/create")
-	public String createTest(Model model) {
-		Test test = new Test();
-		model.addAttribute("test", test);
-		return "testCreate";
-	}
-
-	@RequestMapping(value = "/changeTest", method = RequestMethod.GET)
-	public String changeTest(Model model, Test test) {
-		model.addAttribute("test", test);
-		return "testCreate";
-	}
-
-	@RequestMapping(value = "/saveTest", method = RequestMethod.GET)
-	public String saveTest(Model model, Test test) {
-		testService.addTest(test);
-		return "createQuestions";
-	}
-
+	
 }

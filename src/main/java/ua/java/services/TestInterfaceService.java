@@ -21,4 +21,6 @@ public interface TestInterfaceService {
 	public Test getFullTestById(long id);
 
 	List<Test> findAllByAuthor(String author);
+
+	public void addQuestion(Question q, Test t);
 }

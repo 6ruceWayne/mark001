@@ -1,5 +1,6 @@
 package ua.java.models;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -10,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "role")
 public class Role {
@@ -17,6 +21,26 @@ public class Role {
 	@Column(length = 32, columnDefinition = "varchar(32) default 'user'")
 	private String name;
 	private Set<User> users;
+	@CreationTimestamp
+	private Timestamp createdOn;
+	@UpdateTimestamp
+	private Timestamp updateDateTime;
+
+	public Timestamp getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public Timestamp getUpdateDateTime() {
+		return updateDateTime;
+	}
+
+	public void setUpdateDateTime(Timestamp updateDateTime) {
+		this.updateDateTime = updateDateTime;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

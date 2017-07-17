@@ -1,5 +1,8 @@
 package ua.java.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ua.java.models.Answer;
+import ua.java.models.Question;
+import ua.java.models.Test;
 import ua.java.models.User;
 import ua.java.services.SecurityService;
 import ua.java.services.TestInterfaceService;
@@ -28,7 +34,7 @@ public class UserController {
 	private UserValidator userValidator;
 
 	@Autowired
-	private TestInterfaceService test;
+	private TestInterfaceService testService;
 
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public String registration(Model model) {
@@ -71,10 +77,76 @@ public class UserController {
 	@RequestMapping(value = { "/personalOffice" }, method = RequestMethod.GET)
 	public String personalOffice(Model model, String logout) {
 		if (securityService.getName() != null) {
-			model.addAttribute("listTests", test.findAllByAuthor(securityService.getName()));
+			model.addAttribute("listTests", testService.findAllByAuthor(securityService.getName()));
 			return "personalOffice";
 		} else {
 			return "redirect:/login";
 		}
+	}
+
+	@RequestMapping(value = "/changeTest", method = RequestMethod.GET)
+	public String changeTest(Model model, Test test) {
+		model.addAttribute("test", test);
+		return "testCreate";
+	}
+
+	@RequestMapping(value = "/createTest", method = RequestMethod.GET)
+	public String createTest(Model model) {
+		model.addAttribute("testForm", new Test());
+		return "testCreate";
+	}
+
+	@RequestMapping(value = "/createTest", method = RequestMethod.POST)
+	public String createTest(@ModelAttribute("testForm") Test testForm, Model model) {
+		testForm.settAuthor(securityService.getUser());
+		testService.addTest(testForm);
+		model.addAttribute("testForm", testForm);
+		model.addAttribute("questionList", testService.getListQuestionsById(testForm.getId()));
+		model.addAttribute("questionForm", new Question());
+		model.addAttribute("answerForm", new Answer());
+
+		return "questionsCreate";
+	}
+
+	@RequestMapping(value = "/changeTest/{id}", method = RequestMethod.GET)
+	public String changeTest(@PathVariable("id") long id, Model model) {
+		model.addAttribute("testForm", testService.getFullTestById(id));
+		model.addAttribute("ourTest", new Test());
+		model.addAttribute("questionForm", new Question());
+		model.addAttribute("answerForm", new Answer());
+		return "questionsCreate";
+	}
+
+	@RequestMapping(value = "/changeTest/{id}", method = RequestMethod.POST)
+	public String changeTest(@ModelAttribute("testForm") Test testForm,
+			@ModelAttribute("questionForm") Question questionForm, @ModelAttribute("answerForm") Answer answerForm,
+			Model model) {
+		testService.addQuestion(questionForm, testForm);
+		model.addAttribute("testForm", testForm);
+		model.addAttribute("questionList", testService.getListQuestionsById(testForm.getId()));
+		model.addAttribute("questionForm", new Question());
+		model.addAttribute("answerForm", new Answer());
+		return "questionsCreate";
+	}
+
+	@RequestMapping(value = "/deleteTest/{id}")
+	public String deleteTest(@PathVariable("id") long id, Model model) {
+		testService.removeTest(id);
+		return "redirect:/personalOffice";
+	}
+
+	@RequestMapping(value = "/createQuestions", method = RequestMethod.POST)
+	public String createQuestions(@ModelAttribute("testForm") Test testForm,
+			@ModelAttribute("questionForm") Question questionForm, @ModelAttribute("answerForm") Answer answerForm,
+			Model model) {
+		questionForm.setqTest(testForm);
+		List<Question> list = testService.getListQuestionsById(testForm.getId());
+		list.add(questionForm);
+		testService.addTest(testForm);
+		model.addAttribute("testForm", testForm);
+		model.addAttribute("questionList", testService.getListQuestionsById(testForm.getId()));
+		model.addAttribute("questionForm", new Question());
+		model.addAttribute("answerForm", new Answer());
+		return "questionsCreate";
 	}
 }

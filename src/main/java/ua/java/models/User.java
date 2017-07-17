@@ -2,6 +2,9 @@ package ua.java.models;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -13,9 +16,29 @@ public class User {
 	private String username;
 	private String password;
 	private String passwordConfirm;
+	@OneToMany(mappedBy = "tAuthor", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	private List<Test> listTests = new ArrayList<Test>();
 	private Set<Role> roles;
 	@OneToMany(mappedBy = "rUser", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	private List<Result> result = new ArrayList<Result>();
+	@CreationTimestamp
+	private Timestamp dateRegistration;
+
+	public List<Test> getListTests() {
+		return listTests;
+	}
+
+	public void setListTests(List<Test> listTests) {
+		this.listTests = listTests;
+	}
+
+	public List<Result> getResult() {
+		return result;
+	}
+
+	public void setResult(List<Result> result) {
+		this.result = result;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +48,14 @@ public class User {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Timestamp getDateRegistration() {
+		return dateRegistration;
+	}
+
+	public void setDateRegistration(Timestamp dateRegistration) {
+		this.dateRegistration = dateRegistration;
 	}
 
 	public String getUsername() {

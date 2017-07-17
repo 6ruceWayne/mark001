@@ -1,5 +1,6 @@
 package ua.java.models;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "Tests")
 public class Test {
@@ -28,7 +32,9 @@ public class Test {
 	private int count;
 	private String description;
 	private boolean free;
-	private String author;
+	@ManyToOne
+	@JoinColumn(name = "authorId")
+	private User tAuthor;
 	private String section;
 	@OneToMany(mappedBy = "rTest", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	private List<Result> results = new ArrayList<Result>();
@@ -38,9 +44,29 @@ public class Test {
 	@Column(length = 32, columnDefinition = "varchar(32) default 'Developing'")
 	@Enumerated(EnumType.STRING)
 	private TestStatus status = TestStatus.Developing;
+	@CreationTimestamp
+	private Timestamp createdOn;
+	@UpdateTimestamp
+	private Timestamp updateDateTime;
+
+	public Timestamp getUpdateDateTime() {
+		return updateDateTime;
+	}
+
+	public void setUpdateDateTime(Timestamp updateDateTime) {
+		this.updateDateTime = updateDateTime;
+	}
 
 	public Test() {
 
+	}
+
+	public Timestamp getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
 	}
 
 	public List<Result> getResult() {
@@ -83,12 +109,12 @@ public class Test {
 		this.free = free;
 	}
 
-	public String getAuthor() {
-		return author;
+	public User gettAuthor() {
+		return tAuthor;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
+	public void settAuthor(User tAuthor) {
+		this.tAuthor = tAuthor;
 	}
 
 	public String getSection() {
@@ -126,7 +152,7 @@ public class Test {
 	@Override
 	public String toString() {
 		return "Test [id=" + id + ", name=" + name + ", description=" + description + ", isFree=" + free + ", status="
-				+ status + ", autor=" + author + ", section=" + section + ", commentToAdmin=" + commentToAdmin + "]";
+				+ status + ", autor=" + tAuthor + ", section=" + section + ", commentToAdmin=" + commentToAdmin + "]";
 	}
 
 	public int getCount() {

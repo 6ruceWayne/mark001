@@ -4,37 +4,74 @@
 <%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="${contextPath}/resources/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="${contextPath}/resources/css/common.css" rel="stylesheet">
+<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="index.jsp">Back</a>
+	<span style="float: right"> <c:url var="formPerson"
+			value="/personalOffice" /> <a href="${formPerson}"> personal
+			account</a>
+	</span>
+	<br>
+	<span style="float: right"><a href="?lang=ru">ru</a> | <a
+		href="?lang=ua">ua</a> | <a href="?lang=en">en</a> </span>
+	<br>
+	<form:form modelAttribute="testForm" method="POST">
+		<table>
+			<tr>
+				<td><spring:message code="test.name" /></td>
+				<td><form:input readonly="true" path="name" disabled="true" /></td>
+			</tr>
+			<tr>
+				<td><spring:message code="test.free" /></td>
+				<td><form:input readonly="true" path="free" disabled="true" /></td>
+			</tr>
+			<tr>
+				<td><spring:message code="test.description" /></td>
+				<td><form:input readonly="true" path="description"
+						disabled="true" /></td>
+			</tr>
+			<tr>
+				<td><spring:message code="test.comment.to.admin" /></td>
+				<td><form:input readonly="true" path="commentToAdmin"
+						disabled="true" /></td>
+			</tr>
+			<tr>
+				<td><spring:message code="test.section" /></td>
+				<td><form:input readonly="true" path="section" disabled="true" /></td>
+			</tr>
+		</table>
+	</form:form>
 
 	<h3>Questions List</h3>
-	<button type="submit" class="btn btn-info">
-		<span class="glyphicon glyphicon-search"></span> Search
-	</button>
-	<c:if test="${!empty questionsList}">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th width="25">Question ID</th>
-					<th width="80">Question Name</th>
-				</tr>
-			</thead>
-			<c:forEach items="${questionsList}" var="question">
-				<tr>
-					<td>${question.id}</td>
-					<td>${question.question}</td>
-					<td><a href="<c:url value='/tests/review/${question.id}' />">Review</a></td>
-					<td><a href="<c:url value='/tests/remove/${question.id}' />">Delete</a></td>
-				</tr>
-			</c:forEach>
-		</table>
-	</c:if>
 
+	<form:form modelAttribute="questionForm" method="POST">
+		<table>
+			<tr>
+				<td><spring:message code="test.name" /></td>
+				<td><form:input path="text" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit"
+					value="<spring:message text="test.save"/>" />
+			</tr>
+		</table>
+	</form:form>
+
+	<c:forEach items="${questionList}" var="questions">
+		<table class="table table-striped">
+			<tr>
+				<td>${questions.text}</td>
+			</tr>
+		</table>
+	</c:forEach>
 </body>
 </html>

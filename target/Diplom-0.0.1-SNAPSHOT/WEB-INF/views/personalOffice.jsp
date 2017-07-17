@@ -49,13 +49,16 @@
 					<td>${test.commentToAdmin}</td>
 					<td>${test.section}</td>
 					<td>${test.status}</td>
-					<td><a href="<c:url value='/tests/review/${test.id}' />"><spring:message
+					<td><a href="<c:url value='/changeTest/${test.id}' />"><spring:message
 								code="test.review" /></a></td>
-					<td><a href="<c:url value='/tests/remove/${test.id}' />"><spring:message
+					<td><a href="<c:url value='/deleteTest/${test.id}' />"><spring:message
 								code="test.delete" /></a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</c:if>
+	<c:url var="create" value="/createTest" />
+	<a href="${create}" class="btn btn-success" role="button"><spring:message
+			code="test.new" /></a>
 </body>
 </html>

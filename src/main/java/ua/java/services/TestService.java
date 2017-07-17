@@ -53,6 +53,12 @@ public class TestService implements TestInterfaceService {
 		this.testRep.delete(id);
 	}
 
+	public void addQuestion(Question question, Test test) {
+		// TODO Auto-generated method stub
+		question.setqTest(test);
+		questionServ.addQuestion(question);
+	}
+
 	@Override
 	@Transactional
 	public List<Question> getListQuestionsById(long id) {

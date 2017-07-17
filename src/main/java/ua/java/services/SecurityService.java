@@ -1,5 +1,7 @@
 package ua.java.services;
 
+import ua.java.models.User;
+
 public interface SecurityService {
 	String findLoggedInUsername();
 
@@ -8,4 +10,6 @@ public interface SecurityService {
 	String getName();
 	
 	void logout();
+	
+	User getUser();
 }

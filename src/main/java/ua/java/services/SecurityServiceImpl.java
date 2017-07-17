@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-
+import ua.java.models.User;
 
 @Service
 public class SecurityServiceImpl implements SecurityService {
@@ -30,7 +30,6 @@ public class SecurityServiceImpl implements SecurityService {
 		if (userDetails instanceof UserDetails) {
 			return ((UserDetails) userDetails).getUsername();
 		}
-
 		return null;
 	}
 
@@ -54,6 +53,16 @@ public class SecurityServiceImpl implements SecurityService {
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			String currentUserName = authentication.getName();
 			return currentUserName;
+		}
+		return null;
+	}
+
+	@Override
+	public User getUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			User currentUser = (User) userDetailsService.loadUserByUsername(authentication.getName());
+			return currentUser;
 		}
 		return null;
 	}
