@@ -26,8 +26,8 @@
 		href="?lang=ua">ua</a> | <a href="?lang=en">en</a> </span>
 	<br>
 
-	<c:url var="addAction" value="/tests/add"></c:url>
-	<form:form modelAttribute="ourTest" method="POST" action="tests/add">
+	<form:form modelAttribute="ourTest"
+		action="${contextPath}/review/${ourTest.id}" method="POST">
 		<table>
 			<tr>
 				<td><spring:message code="test.name" /></td>
@@ -37,28 +37,23 @@
 				<td><spring:message code="test.free" /></td>
 				<td><form:input path="free" /></td>
 			</tr>
-			<c:forEach items="${ourTest.questions}" var="vs">
+			<c:forEach items="${ourTest.questions}" var="question"
+				varStatus="status">
 				<tr>
-					<td><spring:message code="test.question" /> <form:input
-							path="vs.text"></form:input></td>
+					<td align="center">${status.count}</td>
+					<td><input name="questions[${status.index}].text"
+						value="${question.text}" /></td>
 				</tr>
-
-				<c:forEach items="${vs.text}" var="answ">
-					<tr>
-						<td><form:label path="${answ.answer}">
-								<spring:message code="test.answer" />:</form:label> <form:input
-								path="${answ.answer}"></form:input></td>
-					</tr>
+				<c:forEach items="${question.answers}" var="answer"
+					varStatus="interator">
+					<td align="center">${interator.count}</td>
+					<td><input name="answers[${interator.index}].answer"
+						value="${answer.answer}" /></td>
 				</c:forEach>
 			</c:forEach>
-			<tr>
-				<td colspan="2"><c:if test="${!empty ourTest.name}">
-						<input type="submit" value="<spring:message text="Save Test"/>" />
-					</c:if> <c:if test="${empty ourTest.name}">
-						<input type="submit" value="<spring:message text="Add Test"/>" />
-					</c:if></td>
-			</tr>
 		</table>
+		<br />
+		<input type="submit" value="Save" />
 	</form:form>
 
 

@@ -12,12 +12,17 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String username;
 	private String password;
 	private String passwordConfirm;
 	@OneToMany(mappedBy = "tAuthor", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	private List<Test> listTests = new ArrayList<Test>();
+	@ManyToMany
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 	@OneToMany(mappedBy = "rUser", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	private List<Result> result = new ArrayList<Result>();
@@ -40,8 +45,6 @@ public class User {
 		this.result = result;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
@@ -83,13 +86,16 @@ public class User {
 		this.passwordConfirm = passwordConfirm;
 	}
 
-	@ManyToMany
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	public Set<Role> getRoles() {
 		return roles;
 	}
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	@Override
+	public String toString() {
+		return username;
 	}
 }

@@ -49,7 +49,7 @@
 				<tr>
 					<td>${test.id}</td>
 					<td>${test.name}</td>
-					<td>${test.author}</td>
+					<td>${test.tAuthor}</td>
 					<td>${test.description}</td>
 					<td>${test.free}</td>
 					<td>${test.commentToAdmin}</td>

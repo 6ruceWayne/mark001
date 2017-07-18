@@ -17,9 +17,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Table(name = "role")
 public class Role {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(length = 32, columnDefinition = "varchar(32) default 'user'")
 	private String name;
+	@ManyToMany(mappedBy = "roles")
 	private Set<User> users;
 	@CreationTimestamp
 	private Timestamp createdOn;
@@ -42,8 +45,6 @@ public class Role {
 		this.updateDateTime = updateDateTime;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
@@ -60,7 +61,6 @@ public class Role {
 		this.name = name;
 	}
 
-	@ManyToMany(mappedBy = "roles")
 	public Set<User> getUsers() {
 		return users;
 	}

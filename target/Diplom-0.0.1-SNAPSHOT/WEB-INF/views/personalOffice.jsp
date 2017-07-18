@@ -29,7 +29,6 @@
 				<tr>
 					<th width="25"><spring:message code="test.id" /></th>
 					<th width="80"><spring:message code="test.name" /></th>
-					<th width="80"><spring:message code="test.author" /></th>
 					<th width="120"><spring:message code="test.description" /></th>
 					<th width="60"><spring:message code="test.free" /></th>
 					<th width="120"><spring:message code="test.comment.to.admin" /></th>
@@ -43,7 +42,6 @@
 				<tr>
 					<td>${test.id}</td>
 					<td>${test.name}</td>
-					<td>${test.author}</td>
 					<td>${test.description}</td>
 					<td>${test.free}</td>
 					<td>${test.commentToAdmin}</td>

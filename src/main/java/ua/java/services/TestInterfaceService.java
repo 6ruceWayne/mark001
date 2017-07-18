@@ -4,9 +4,10 @@ import java.util.List;
 
 import ua.java.models.Question;
 import ua.java.models.Test;
+import ua.java.models.User;
 
 public interface TestInterfaceService {
-	public void addTest(Test p);
+	public Test addTest(Test p);
 
 	public void updateTest(Test p);
 
@@ -20,7 +21,7 @@ public interface TestInterfaceService {
 
 	public Test getFullTestById(long id);
 
-	List<Test> findAllByAuthor(String author);
+	List<Test> findAllByAuthorId(User user);
 
-	public void addQuestion(Question q, Test t);
+	public Test addQuestion(Question q, Test t);
 }

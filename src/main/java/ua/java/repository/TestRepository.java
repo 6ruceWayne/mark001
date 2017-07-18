@@ -8,9 +8,10 @@ import org.springframework.data.repository.query.Param;
 
 import ua.java.models.Question;
 import ua.java.models.Test;
+import ua.java.models.User;
 
 public interface TestRepository extends JpaRepository<Test, Long> {
-	Test findTestByAuthor(String author);
+	Test findTestBytAuthor(User user);
 
 	List<Test> findAll();
 
@@ -21,5 +22,5 @@ public interface TestRepository extends JpaRepository<Test, Long> {
 	@Query("SELECT q FROM Question q WHERE q.qTest = ?1")
 	List<Question> findByTestId(@Param("qTest") Test qTest);
 
-	List<Test> getListTestsByAuthor(String author);
+	List<Test> getListTestsBytAuthor(User user);
 }

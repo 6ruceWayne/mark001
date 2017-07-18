@@ -56,12 +56,12 @@
 	<form:form modelAttribute="questionForm" method="POST">
 		<table>
 			<tr>
-				<td><spring:message code="test.name" /></td>
+				<td><spring:message code="question.text" /></td>
 				<td><form:input path="text" /></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit"
-					value="<spring:message text="test.save"/>" />
+				<td colspan="2"><input class="btn btn-success" type="submit"
+					value="<spring:message code="question.add"/>" />
 			</tr>
 		</table>
 	</form:form>

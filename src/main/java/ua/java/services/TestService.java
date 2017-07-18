@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ua.java.models.Answer;
 import ua.java.models.Question;
 import ua.java.models.Test;
+import ua.java.models.User;
 import ua.java.repository.TestRepository;
 
 @Service
@@ -25,9 +26,10 @@ public class TestService implements TestInterfaceService {
 	private AnswerInterfaceService answerServ;
 
 	@Override
-	public void addTest(Test t) {
+	public Test addTest(Test t) {
 		// TODO Auto-generated method stub
 		this.testRep.save(t);
+		return t;
 	}
 
 	@Override
@@ -53,10 +55,11 @@ public class TestService implements TestInterfaceService {
 		this.testRep.delete(id);
 	}
 
-	public void addQuestion(Question question, Test test) {
+	public Test addQuestion(Question question, Test test) {
 		// TODO Auto-generated method stub
 		question.setqTest(test);
 		questionServ.addQuestion(question);
+		return getFullTestById(test.getId());
 	}
 
 	@Override
@@ -81,7 +84,7 @@ public class TestService implements TestInterfaceService {
 	}
 
 	@Override
-	public List<Test> findAllByAuthor(String author) {
-		return testRep.getListTestsByAuthor(author);
+	public List<Test> findAllByAuthorId(User user) {
+		return testRep.getListTestsBytAuthor(user);
 	}
 }

@@ -67,6 +67,12 @@
 		<a href="${logout}">Test logout</a>
 	</h3>
 
+	<h4 align="center">
+		<c:url var="pass" value='/tests/previewTest/1' />
+		<a href="${pass}">Start test</a>
+	</h4>
+
+
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>

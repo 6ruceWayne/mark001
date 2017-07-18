@@ -31,8 +31,7 @@ public class TestController {
 	public String listTests(Model model) {
 		/*
 		 * String welcome = messageSource.getMessage("label.registration", new
-		 * Object[]{"John Doe"}, locale); model.addAttribute("message",
-		 * welcome);
+		 * Object[]{"John Doe"}, locale); model.addAttribute("message", welcome);
 		 */
 		model.addAttribute("test", new Test());
 		model.addAttribute("listTests", this.testService.listTests());
@@ -40,7 +39,7 @@ public class TestController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addTest(@ModelAttribute("test") Test t) {
+	public String addTest(Test t) {
 		if (t.getId() == 0) {
 			this.testService.addTest(t);
 		} else {
@@ -66,6 +65,12 @@ public class TestController {
 		return "review";
 	}
 
+	@RequestMapping(value = "/review/{id}", method = RequestMethod.POST)
+	public String review(@PathVariable("id") long id, Model model, @PathVariable("ourTest") Test ourTest) {
+		testService.addTest(ourTest);
+		return "redirect:/tests/review/" + id;
+	}
+
 	@RequestMapping(value = "/choise/{id}/{status}", method = RequestMethod.GET)
 	public String choise(@PathVariable("id") long id, @PathVariable("status") String status, Model model) {
 		Test test = this.testService.getTestById(id);
@@ -76,5 +81,18 @@ public class TestController {
 		return editTest(id, model);
 	}
 
-	
+	@RequestMapping(value = "/testPassing/{id}", method = RequestMethod.GET)
+	public String testPassing(@PathVariable("id") long id, Model model) {
+		Test test = this.testService.getFullTestById(id);
+		model.addAttribute("ourTest", test);
+		return "j";
+	}
+
+	@RequestMapping(value = "/previewTest/{id}")
+	public String previewTest(@PathVariable("id") long id, Model model) {
+		Test test = this.testService.getTestById(id);
+		model.addAttribute("ourTest", test);
+		return "previewTest";
+	}
+
 }

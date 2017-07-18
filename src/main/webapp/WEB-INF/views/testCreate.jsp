@@ -29,7 +29,7 @@
 		<table>
 			<tr>
 				<td><spring:message code="test.author" /></td>
-				<td><form:input path="author" disabled="true"
+				<td><form:input path="name" disabled="true"
 						value="${pageContext.request.userPrincipal.name}" /></td>
 			</tr>
 

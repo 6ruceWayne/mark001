@@ -77,7 +77,8 @@ public class UserController {
 	@RequestMapping(value = { "/personalOffice" }, method = RequestMethod.GET)
 	public String personalOffice(Model model, String logout) {
 		if (securityService.getName() != null) {
-			model.addAttribute("listTests", testService.findAllByAuthor(securityService.getName()));
+			model.addAttribute("listTests",
+					testService.findAllByAuthorId(userService.findByUsername(securityService.getName())));
 			return "personalOffice";
 		} else {
 			return "redirect:/login";
@@ -98,10 +99,10 @@ public class UserController {
 
 	@RequestMapping(value = "/createTest", method = RequestMethod.POST)
 	public String createTest(@ModelAttribute("testForm") Test testForm, Model model) {
-		testForm.settAuthor(securityService.getUser());
-		testService.addTest(testForm);
+		testForm.settAuthor(userService.findByUsername(securityService.getName()));
+		Test test = testService.addTest(testForm);
 		model.addAttribute("testForm", testForm);
-		model.addAttribute("questionList", testService.getListQuestionsById(testForm.getId()));
+		model.addAttribute("questionList", test.getQuestions());
 		model.addAttribute("questionForm", new Question());
 		model.addAttribute("answerForm", new Answer());
 
@@ -110,9 +111,11 @@ public class UserController {
 
 	@RequestMapping(value = "/changeTest/{id}", method = RequestMethod.GET)
 	public String changeTest(@PathVariable("id") long id, Model model) {
-		model.addAttribute("testForm", testService.getFullTestById(id));
+		Test test = testService.getFullTestById(id);
+		model.addAttribute("testForm", test);
 		model.addAttribute("ourTest", new Test());
 		model.addAttribute("questionForm", new Question());
+		model.addAttribute("questionList", test.getQuestions());
 		model.addAttribute("answerForm", new Answer());
 		return "questionsCreate";
 	}
@@ -121,9 +124,11 @@ public class UserController {
 	public String changeTest(@ModelAttribute("testForm") Test testForm,
 			@ModelAttribute("questionForm") Question questionForm, @ModelAttribute("answerForm") Answer answerForm,
 			Model model) {
-		testService.addQuestion(questionForm, testForm);
-		model.addAttribute("testForm", testForm);
-		model.addAttribute("questionList", testService.getListQuestionsById(testForm.getId()));
+		Question question = new Question();
+		question = questionForm;
+		Test test = testService.addQuestion(question, testForm);
+		model.addAttribute("testForm", test);
+		model.addAttribute("questionList", test.getQuestions());
 		model.addAttribute("questionForm", new Question());
 		model.addAttribute("answerForm", new Answer());
 		return "questionsCreate";
@@ -139,12 +144,9 @@ public class UserController {
 	public String createQuestions(@ModelAttribute("testForm") Test testForm,
 			@ModelAttribute("questionForm") Question questionForm, @ModelAttribute("answerForm") Answer answerForm,
 			Model model) {
-		questionForm.setqTest(testForm);
-		List<Question> list = testService.getListQuestionsById(testForm.getId());
-		list.add(questionForm);
-		testService.addTest(testForm);
-		model.addAttribute("testForm", testForm);
-		model.addAttribute("questionList", testService.getListQuestionsById(testForm.getId()));
+		Test test = testService.addQuestion(questionForm, testForm);
+		model.addAttribute("testForm", test);
+		model.addAttribute("questionList", test.getQuestions());
 		model.addAttribute("questionForm", new Question());
 		model.addAttribute("answerForm", new Answer());
 		return "questionsCreate";
