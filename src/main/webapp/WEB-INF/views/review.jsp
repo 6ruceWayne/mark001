@@ -26,8 +26,8 @@
 		href="?lang=ua">ua</a> | <a href="?lang=en">en</a> </span>
 	<br>
 
-	<form:form modelAttribute="ourTest"
-		action="${contextPath}/review/${ourTest.id}" method="POST">
+	<form:form modelAttribute="candidateTest"
+		action="/tests/review/saveChanges" method="POST">
 		<table>
 			<tr>
 				<td><spring:message code="test.name" /></td>
@@ -37,7 +37,7 @@
 				<td><spring:message code="test.free" /></td>
 				<td><form:input path="free" /></td>
 			</tr>
-			<c:forEach items="${ourTest.questions}" var="question"
+			<c:forEach items="${candidateTest.questions}" var="question"
 				varStatus="status">
 				<tr>
 					<td align="center">${status.count}</td>

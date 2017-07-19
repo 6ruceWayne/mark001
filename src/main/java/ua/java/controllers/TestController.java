@@ -58,17 +58,18 @@ public class TestController {
 	@RequestMapping("/review/{id}")
 	public String editTest(@PathVariable("id") long id, Model model) {
 		Test test = this.testService.getFullTestById(id);
-		model.addAttribute("ourTest", test);
-		model.addAttribute("ourQuestions", test.getQuestions());
+		model.addAttribute("candidateTest", test);
+		model.addAttribute("candidateQuestions", test.getQuestions());
 
-		model.addAttribute("ourAnswers", test.getQuestions());
+		model.addAttribute("candidateAnswers", test.getQuestions());
 		return "review";
 	}
 
-	@RequestMapping(value = "/review/{id}", method = RequestMethod.POST)
-	public String review(@PathVariable("id") long id, Model model, @PathVariable("ourTest") Test ourTest) {
-		testService.addTest(ourTest);
-		return "redirect:/tests/review/" + id;
+	@ModelAttribute("candidateTest")
+	@RequestMapping(value = "/review/saveChanges", method = RequestMethod.POST)
+	public String review(@PathVariable("candidateTest") Test candidateTest, Model model) {
+		testService.addTest(candidateTest);
+		return "redirect:/tests/list";
 	}
 
 	@RequestMapping(value = "/choise/{id}/{status}", method = RequestMethod.GET)
